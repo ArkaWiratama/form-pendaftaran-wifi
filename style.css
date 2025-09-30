@@ -1,0 +1,108 @@
+/* styles.css */
+
+/* --- RESET & FONT --- */
+body {
+    margin: 0; padding: 0; overflow-x: hidden; 
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4; 
+}
+
+/* ===================================== */
+/* === STYLING ANIMASI 5 DETIK AWAL === */
+/* ===================================== */
+
+#intro-animation {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: #0a141e; 
+    display: flex; justify-content: center; align-items: center;
+    flex-direction: column; z-index: 9999; opacity: 1;
+    /* KRITIS: Transisi Opacity dikendalikan oleh JS untuk FADE OUT yang halus */
+    transition: opacity 0.5s ease-out; 
+}
+.background-grid {
+    position: absolute; width: 100%; height: 100%;
+    background: radial-gradient(circle, #00ffff33 1px, transparent 1px), #0a141e;
+    background-size: 50px 50px; opacity: 0;
+    animation: grid-fade-in 0.5s ease-out forwards;
+}
+.signal-wrapper { position: relative; display: flex; justify-content: center; align-items: center; }
+.signal-line {
+    width: 0; height: 3px; background: #00ffff; position: absolute;
+    transform: translateY(-50px); box-shadow: 0 0 15px #00ffff;
+    animation: scan-across 1.5s 0.5s ease-in-out forwards;
+}
+.wifi-icon {
+    font-size: 6rem; color: #00ffff; opacity: 0; transform: translateY(-50px);
+    animation: icon-reveal 0.5s 2.0s forwards;
+}
+.welcome-text {
+    font-family: 'Electrolize', sans-serif; color: #00ffff;
+    font-size: 3.5rem; letter-spacing: 5px; opacity: 0; margin-top: 30px;
+    animation: text-reveal 1s 2.5s forwards;
+    text-shadow: 0 0 10px #00ffff80;
+}
+
+/* ========================================== */
+/* === STYLING KONTEN UTAMA (SETELAH 5S) === */
+/* ========================================== */
+
+#main-content {
+    min-height: 100vh; 
+    background-color: #0d1a26; 
+    color: #f0f0f0; 
+    font-family: 'Electrolize', sans-serif; 
+    
+    display: flex; justify-content: center; align-items: center;
+    opacity: 0; 
+    display: none; /* KUNCI: Disembunyikan total di awal */
+}
+/* Class ini diaktifkan oleh JS untuk transisi halus */
+#main-content.visible {
+    display: flex; /* Ganti display: none */
+    animation: content-fade-in 0.5s forwards;
+}
+
+/* --- WRAPPER / BINGKAI DIGITAL CANGGIH --- */
+#main-content-wrapper {
+    padding: 60px 80px; 
+    width: 80%; max-width: 600px;
+    background-color: #1a2b3c; 
+    
+    /* EFEK CAHAYA UTAMA */
+    border: 2px solid #00ffff; 
+    border-radius: 10px;
+    box-shadow: 0 0 40px #00ffff66, 0 0 5px #00ffffaa inset; 
+    
+    text-align: center;
+    transition: all 0.3s;
+}
+#main-content-wrapper h2 {
+    color: #00ffff; font-size: 2.5rem; margin-bottom: 10px;
+    text-shadow: 0 0 8px #00ffff66;
+}
+#main-content-wrapper p {
+    color: #a0a0a0; font-size: 1.1rem; margin-bottom: 40px; 
+}
+
+/* --- STYLE TOMBOL CANGGIH --- */
+.daftar-button {
+    display: inline-block; padding: 18px 40px; margin-top: 30px;
+    text-decoration: none; font-family: 'Electrolize', sans-serif;
+    font-size: 1.3rem; letter-spacing: 2px;
+    background-color: #00ffff; color: #0d1a26 !important; 
+    border: 3px solid #00ffff; border-radius: 5px; cursor: pointer;
+    box-shadow: 0 0 15px #00ffff80; transition: all 0.3s ease;
+    opacity: 0; transform: translateY(20px); /* Awalnya tersembunyi */
+}
+.daftar-button:hover {
+    background-color: #00cccc; box-shadow: 0 0 25px #00ffff; 
+    transform: scale(1.05) translateY(-2px);
+}
+
+/* --- KEYFRAMES (Gerakan Animasi) --- */
+@keyframes grid-fade-in { to { opacity: 0.1; } }
+@keyframes scan-across { 0% { width: 0; } 100% { width: 300px; opacity: 1; } }
+@keyframes icon-reveal { 0% { opacity: 0; } 100% { opacity: 1; } }
+@keyframes text-reveal { 0% { opacity: 0; transform: translateY(20px); } 100% { transform: translateY(0); opacity: 1; } }
+@keyframes content-fade-in { to { opacity: 1; } }
+@keyframes button-fade-in { to { opacity: 1; transform: translateY(0); } }

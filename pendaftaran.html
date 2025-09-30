@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Pendaftaran WiFi</title>
+    
+    <link rel="stylesheet" href="form_styles.css"> 
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Electrolize&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <main class="form-container">
+        <div class="form-wrapper">
+            <h1><i class="fas fa-satellite-dish"></i> Daftarkan Perangkat Anda</h1>
+            <p>Isi data perangkat dengan benar untuk aktivasi layanan WiFi.</p>
+            
+            <form id="wifi-form"> 
+                
+                <div class="input-group">
+                    <label for="nama"><i class="fas fa-user"></i> Nama Lengkap</label>
+                    <input type="text" id="nama" name="Nama" required placeholder="Contoh: Budi Santoso">
+                </div>
+                
+                <div class="input-group">
+                    <label for="perangkat"><i class="fas fa-mobile-alt"></i> Jenis Perangkat</label>
+                    <select id="perangkat" name="Jenis Perangkat" required>
+                        <option value="" disabled selected>Pilih perangkat yang didaftarkan</option>
+                        <option value="Smartphone / Tablet">Smartphone / Tablet</option>
+                        <option value="Laptop / PC">Laptop / PC</option>
+                        <option value="Smart TV">Smart TV</option>
+                        <option value="Lainnya">Lainnya</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="mac-address"><i class="fas fa-network-wired"></i> MAC Address</label>
+                    <input type="text" id="mac-address" name="Mac Address" required 
+                            placeholder="Contoh: A1:B2:C3:D4:E5:F6"
+                            pattern="([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})">
+                    <small>MAC Address biasanya 12 karakter heksadesimal dipisahkan titik dua (:) atau tanda hubung (-).</small>
+                </div>
+
+                <button type="submit" id="submit-btn" class="submit-button">
+                    <i class="fas fa-bolt"></i> AKTIVASI JARINGAN
+                </button>
+                
+                <div id="status-message" style="margin-top: 15px; color: green; font-weight: bold;"></div>
+                
+            </form>
+        </div>
+    </main>
+
+    <script>
+        // GANTI URL INI dengan Web app URL Google Apps Script Anda!
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwdfS1-1fFFArW2x9B13dozUqNHtBp0X_AO17L1Kiq4bufyL0NoR0-RKw7eJleLNZar/exec'; 
+
+        const form = document.getElementById('wifi-form');
+        const submitButton = document.getElementById('submit-btn');
+        const originalButtonText = submitButton.innerHTML;
+        const statusMessage = document.getElementById('status-message');
+
+        form.addEventListener('submit', e => {
+            e.preventDefault(); 
+
+            // 1. Ubah tampilan tombol (Loading state)
+            submitButton.disabled = true;
+            submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sedang Mengirim...';
+            statusMessage.textContent = ''; // Hapus pesan sebelumnya
+            statusMessage.style.color = 'gray';
+
+            // 2. Kirim data menggunakan Fetch API
+            fetch(SCRIPT_URL, { 
+                method: 'POST', 
+                body: new FormData(form),
+                redirect: 'follow'
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Gagal terhubung ke Google Apps Script.');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // 3. Tampilkan pesan sukses/gagal
+                if (data.result === 'success') {
+                    statusMessage.style.color = 'green';
+                    statusMessage.textContent = '✅ Pendaftaran berhasil! Data telah masuk ke Spreadsheet.';
+                    form.reset(); 
+                } else {
+                    statusMessage.style.color = 'red';
+                    statusMessage.textContent = '❌ Gagal: ' + (data.error || 'Terjadi kesalahan pada Apps Script.');
+                }
+            })
+            .catch(error => {
+                // 4. Tampilkan error umum
+                console.error('Error:', error);
+                statusMessage.style.color = 'red';
+                statusMessage.textContent = '❌ Terjadi kesalahan saat pengiriman: Cek koneksi Anda atau Web App URL.';
+            })
+            .finally(() => {
+                // 5. Kembalikan tombol ke keadaan semula
+                submitButton.disabled = false;
+                submitButton.innerHTML = originalButtonText;
+            });
+        });
+    </script>
+    </body>
+</html>

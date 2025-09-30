@@ -1,0 +1,108 @@
+/* form_styles.css */
+
+/* --- RESET & FONT --- */
+body {
+    margin: 0; padding: 0;
+    font-family: 'Electrolize', sans-serif;
+    background-color: #0d1a26; /* Latar Belakang Sangat Gelap */
+    color: #f0f0f0; 
+}
+
+/* --- CONTAINER & WRAPPER FORM --- */
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.form-wrapper {
+    padding: 40px 60px;
+    width: 100%;
+    max-width: 500px;
+    background-color: #1a2b3c; /* Panel Agak Terang */
+    
+    /* EFEK CAHAYA CANGGIH */
+    border: 2px solid #00ffff; 
+    border-radius: 10px;
+    box-shadow: 0 0 40px #00ffff66, 0 0 5px #00ffffaa inset; 
+    
+    text-align: center;
+}
+
+.form-wrapper h1 {
+    color: #00ffff;
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+    text-shadow: 0 0 8px #00ffff66;
+}
+
+.form-wrapper p {
+    color: #a0a0a0;
+    margin-bottom: 30px;
+    font-size: 0.9rem;
+}
+
+/* --- INPUT GROUP STYLING --- */
+.input-group {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #00ffff;
+    font-size: 1rem;
+}
+
+.input-group input, .input-group select {
+    width: 100%;
+    padding: 12px 10px;
+    background-color: #0d1a26; /* Latar belakang input gelap */
+    border: 1px solid #00ffff77;
+    border-radius: 4px;
+    color: #f0f0f0;
+    font-family: 'Electrolize', sans-serif;
+    font-size: 1rem;
+    box-shadow: 0 0 5px #00ffff1a;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.input-group input:focus, .input-group select:focus {
+    border-color: #00ffff;
+    box-shadow: 0 0 10px #00ffffaa;
+    outline: none;
+}
+
+.input-group small {
+    display: block;
+    margin-top: 5px;
+    color: #666;
+    font-size: 0.8rem;
+}
+
+/* --- TOMBOL SUBMIT --- */
+.submit-button {
+    width: 100%;
+    padding: 15px;
+    margin-top: 30px;
+    font-family: 'Electrolize', sans-serif;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    
+    background-color: #00ffff; 
+    color: #0d1a26; 
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 0 15px #00ffff80;
+    transition: all 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #00cccc; 
+    box-shadow: 0 0 25px #00ffff;
+    transform: translateY(-2px);
+}
